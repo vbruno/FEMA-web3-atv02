@@ -10,6 +10,7 @@ export const Container = styled.div`
 
   > header {
     width: 100%;
+    min-height: 150px;
     height: 200px;
 
     display: flex;
@@ -153,5 +154,14 @@ export const ListTasks = styled.div`
     > div:nth-child(2) h3 {
       color: ${({ theme }) => theme.COLORS.PURPLE};
     }
+  }
+
+  > main {
+    margin-top: 25px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 16px;
   }
 `;

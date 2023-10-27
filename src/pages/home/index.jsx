@@ -1,6 +1,8 @@
 import { FiPlusCircle } from "react-icons/fi";
 import { Container, AddNewTask, ListTasks } from "./styles";
 
+import { Task } from "../../components/Task";
+
 import logo from "../../assets/rocket.svg";
 
 export function Home() {
@@ -33,7 +35,13 @@ export function Home() {
             <span>2 de 5</span>
           </div>
         </header>
-        <main></main>
+        <main>
+          <Task />
+          <Task />
+          <Task />
+          <Task isCompleted />
+          <Task isCompleted />
+        </main>
       </ListTasks>
     </Container>
   );
