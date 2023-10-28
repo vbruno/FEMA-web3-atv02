@@ -3,6 +3,7 @@ import { FiPlusCircle } from "react-icons/fi";
 import { Container, AddNewTask, ListTasks } from "./styles";
 
 import { Task } from "../../components/Task";
+import { ModalConfirmed } from "../../components/ModalConfirmed";
 
 import logo from "../../assets/rocket.svg";
 
@@ -11,6 +12,8 @@ export function Home() {
   const [newTask, setNewTask] = useState("");
   const [countTasks, setCountTasks] = useState(0);
   const [countCompletedTasks, setCountCompletedTasks] = useState(0);
+
+  const [isOpenModal, setIsOpenModal] = useState(0);
 
   function handleAddNewTask() {
     if (
@@ -48,8 +51,18 @@ export function Home() {
 
   function handleDeleteTask(positionTask) {
     setTasks((oldTasks) =>
-      oldTasks.filter((_, index) => index !== positionTask)
+      oldTasks.filter((_, index) => index !== positionTask - 1)
     );
+
+    setIsOpenModal(false);
+  }
+
+  function handleDeleteTaskConfirmed(positionTask) {
+    setIsOpenModal(positionTask + 1);
+  }
+
+  function handleDeleteTaskCanceled() {
+    setIsOpenModal(false);
   }
 
   useEffect(() => {
@@ -118,13 +131,20 @@ export function Home() {
               onCompleted={() => {
                 handleCompleteTask(index);
               }}
-              onDeleted={() => {
-                handleDeleteTask(index);
-              }}
+              onDeleted={() => handleDeleteTaskConfirmed(index)}
             />
           ))}
         </main>
       </ListTasks>
+
+      {!!isOpenModal && (
+        <ModalConfirmed
+          onConfirm={() => {
+            handleDeleteTask(isOpenModal);
+          }}
+          onClosed={handleDeleteTaskCanceled}
+        />
+      )}
     </Container>
   );
 }
