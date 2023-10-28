@@ -25,6 +25,28 @@ export function Home() {
     },
   ]);
 
+  const [newTask, setNewTask] = useState("");
+
+  function handleAddNewTask() {
+    if (
+      newTask.trim() === "" ||
+      newTask.trim() === null ||
+      newTask === undefined ||
+      newTask === " "
+    ) {
+      return;
+    }
+
+    setTasks((oldTasks) => [
+      ...oldTasks,
+      {
+        description: newTask,
+        isCompleted: false,
+      },
+    ]);
+    setNewTask("");
+  }
+
   function handleCompleteTask(positionTask) {
     setTasks((oldTasks) =>
       oldTasks.map((task, index) => {
@@ -40,7 +62,6 @@ export function Home() {
   }
 
   function handleDeleteTask(positionTask) {
-    console.log(positionTask);
     setTasks((oldTasks) =>
       oldTasks.filter((_, index) => index !== positionTask)
     );
@@ -57,8 +78,12 @@ export function Home() {
       </header>
 
       <AddNewTask>
-        <input placeholder="Adicione uma nova tarefa" />
-        <button type="button">
+        <input
+          placeholder="Adicione uma nova tarefa"
+          value={newTask}
+          onChange={(e) => setNewTask(e.target.value)}
+        />
+        <button type="button" onClick={handleAddNewTask}>
           Criar
           <FiPlusCircle />
         </button>
@@ -78,7 +103,7 @@ export function Home() {
         <main>
           {tasks.map((task, index) => (
             <Task
-              key={task.description}
+              key={index}
               taskDescription={task.description}
               isCompleted={task.isCompleted}
               onCompleted={() => {
