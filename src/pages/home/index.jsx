@@ -55,6 +55,10 @@ export function Home() {
     );
 
     setIsOpenModal(false);
+
+    if (tasks.length === 1) {
+      localStorage.removeItem("@FEMA-Web3-atv02:tasks");
+    }
   }
 
   function handleDeleteTaskConfirmed(positionTask) {
