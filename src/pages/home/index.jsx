@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FiPlusCircle } from "react-icons/fi";
 import { Container, AddNewTask, ListTasks } from "./styles";
 
@@ -24,8 +24,9 @@ export function Home() {
       isCompleted: true,
     },
   ]);
-
   const [newTask, setNewTask] = useState("");
+  const [countTasks, setCountTasks] = useState(0);
+  const [countCompletedTasks, setCountCompletedTasks] = useState(0);
 
   function handleAddNewTask() {
     if (
@@ -67,6 +68,13 @@ export function Home() {
     );
   }
 
+  useEffect(() => {
+    setCountTasks(tasks.length);
+    setCountCompletedTasks(
+      tasks.filter((task) => task.isCompleted === true).length
+    );
+  }, [tasks]);
+
   return (
     <Container>
       <header>
@@ -93,11 +101,13 @@ export function Home() {
         <header>
           <div>
             <h3>Tarefas criadas</h3>
-            <span>5</span>
+            <span>{countTasks}</span>
           </div>
           <div>
             <h3>Concluídas</h3>
-            <span>2 de 5</span>
+            <span>
+              {countCompletedTasks} de {countTasks}
+            </span>
           </div>
         </header>
         <main>
