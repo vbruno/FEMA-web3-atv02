@@ -7,23 +7,7 @@ import { Task } from "../../components/Task";
 import logo from "../../assets/rocket.svg";
 
 export function Home() {
-  const [tasks, setTasks] = useState([
-    {
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ultrices neque ornare aenean euismod elementum nisi. Adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus urna neque. Massa tincidunt dui ut ornare lectus. Quis lectus nulla at volutpat diam. Maecenas pharetra convallis posuere morbi leo. Suspendisse potenti nullam ac tortor. Eu turpis egestas pretium aenean pharetra magna ac. At augue eget arcu dictum varius. Aliquam eleifend mi in nulla posuere sollicitudin aliquam.",
-      isCompleted: false,
-    },
-    {
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ultrices neque ornare aenean euismod elementum nisi. Adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus urna neque. Massa tincidunt dui ut ornare lectus. Quis lectus nulla at volutpat diam. Maecenas pharetra convallis posuere morbi leo. Suspendisse potenti nullam ac tortor. Eu turpis egestas pretium aenean pharetra magna ac. At augue eget arcu dictum varius. Aliquam eleifend mi in nulla posuere sollicitudin aliquam.",
-      isCompleted: false,
-    },
-    {
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ultrices neque ornare aenean euismod elementum nisi. Adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus urna neque. Massa tincidunt dui ut ornare lectus. Quis lectus nulla at volutpat diam. Maecenas pharetra convallis posuere morbi leo. Suspendisse potenti nullam ac tortor. Eu turpis egestas pretium aenean pharetra magna ac. At augue eget arcu dictum varius. Aliquam eleifend mi in nulla posuere sollicitudin aliquam.",
-      isCompleted: true,
-    },
-  ]);
+  const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
   const [countTasks, setCountTasks] = useState(0);
   const [countCompletedTasks, setCountCompletedTasks] = useState(0);
@@ -67,6 +51,21 @@ export function Home() {
       oldTasks.filter((_, index) => index !== positionTask)
     );
   }
+
+  useEffect(() => {
+    const tasksStorage = localStorage.getItem("@FEMA-Web3-atv02:tasks");
+    if (tasksStorage) {
+      setTasks(JSON.parse(tasksStorage));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (tasks.length === 0) {
+      return;
+    }
+
+    localStorage.setItem("@FEMA-Web3-atv02:tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   useEffect(() => {
     setCountTasks(tasks.length);
