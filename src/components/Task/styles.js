@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
-  height: 72px;
+  min-height: 72px;
 
   display: flex;
   flex-direction: row;
@@ -22,6 +22,7 @@ export const Container = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: 140%; /* 19.6px */
+    text-align: justify;
   }
 
   > button {
